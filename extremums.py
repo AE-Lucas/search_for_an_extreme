@@ -208,3 +208,59 @@ def vizualize_lagrange(variables, function, x_res = [-1000,1000], y_res = [-1000
   fig.update_layout(scene = dict(xaxis_title='X, у.е.',yaxis_title='Y, у.е.',zaxis_title='Z, у.е.'),title_text='F(x,y)= '+str(function),height=600)
   fig.show()
 
+def user_input():
+  print('Введите переменные в формате:')
+  print('x y')
+  variables_1 = input()
+
+  print('Введите функцию в формате:')
+  print('x*y')
+  f_1 = sympify(input())
+
+  print('Добавить ограничение на х?')
+  print('Yes/No')
+  answer_1 = input()
+  if answer_1 == 'Yes':
+    print('Введите ограничение в формате:')
+    print('-1')
+    print('1')
+    x_res_1 = []
+    x_res_1.append(int(input()))
+    x_res_1.append(int(input()))
+  else:
+    x_res_1 = [-1000,1000]   
+
+  print('Добавить ограничение на y?')
+  print('Yes/No')
+  answer_2 = input()
+  if answer_2 == 'Yes':
+    print('Введите ограничение в формате:')
+    print('-1')
+    print('1')
+    y_res_1 = []
+    y_res_1.append(int(input()))
+    y_res_1.append(int(input()))
+  else:
+    y_res_1 = [-1000,1000]   
+       
+  print('Добавить функцию g?')
+  print('Yes/No')
+  answer_3 = input()
+  if answer_3 == 'Yes':
+    print('Введите функцию g в формате:')
+    print('x*y')
+    g_1 = sympify(input())
+  else:
+    g_1 = None
+  if g_1 == None:
+    result = extremum(variables_1,f_1,x_res_1,y_res_1,g_1) 
+    for i in result:
+      print(i)
+    grafic = vizualize(variables_1,f_1,x_res_1,y_res_1,g_1)
+    print(grafic)
+  else:
+    result = lagrange(variables_1,f_1,x_res_1,y_res_1,g_1) 
+    for i in result:
+      print(i)
+    grafic = vizualize_lagrange(variables_1,f_1,x_res_1,y_res_1,g_1)
+    print(grafic)
