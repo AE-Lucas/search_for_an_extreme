@@ -12,14 +12,32 @@ x,y = symbols('x y')
 import numpy as np
 import pandas as pd
 
-import matplotlib.pyplot as plt
-
 import plotly
 import plotly.graph_objs as go
 import plotly.express as px
 from plotly.subplots import make_subplots
 
+'''
+Поиск безусловного и условного экстремума
+'''
+
 def extremum(variables, function, x_res = [-1000,1000], y_res = [-1000,1000], g = None):
+  '''
+  variables: str
+    Входная строка с переменными
+  function: sympy.function
+    Функция
+  x_res: list
+    Ограничение на x
+  y_res: list
+    Ограничения на y
+  g: sympy.function
+    Функция ограничения
+
+  Result: list
+    Список координат точек
+  '''
+
   decision = []
   x,y=symbols(variables)
 
@@ -73,50 +91,82 @@ def extremum(variables, function, x_res = [-1000,1000], y_res = [-1000,1000], g 
   return(decision)
 
 def lagrange(variables, function, x_res = [-1000,1000], y_res = [-1000,1000], g = None):
-    decision = []
-    x,y=symbols(variables)
-    w = Symbol('w')
-    f = function.subs({x:x,y:y}) 
-    g = g.subs({x:x,y:y}) 
-    # Вспомогательная функция Лагранжа
-    z = f + w*g
-    # Производные 
-    fx = z.diff(x)
-    fy = z.diff(y)
-    fw = z.diff(w)
-    try:
-      sols = solve([fx,fy,fw],x,y,w)
-    except:
-      decision.append([' Функция не дифференцируема'])
-      raise SystemExit(1)
-    # Стационарная точка M(x,y) - sols
-    for i in range(len(sols)):
-      dec = []
-      cr_1 = float('{:.3f}'.format(float(sols[i][0])))
-      cr_2 = float('{:.3f}'.format(float(sols[i][1])))
-      la = float('{:.3f}'.format(float(sols[i][2])))
-      if cr_1 < x_res[0] or cr_1 > x_res[1] or cr_2 < y_res[0] or cr_2 > y_res[1]:
-        decision.append(['Не удовлетворяет ограничению'])
-      else:  
-        fxx=z.diff(x,x).subs({x:cr_1,y:cr_2,w:la})
-        fxx = float('{:.3f}'.format(float(fxx)))
-        fxy=z.diff(x,y).subs({x:cr_1,y:cr_2,w:la})
-        fxy = float('{:.3f}'.format(float(fxy)))  
-        fyy=z.diff(y,y).subs({x:cr_1,y:cr_2,w:la})
-        fyy = float('{:.3f}'.format(float(fyy)))  
 
-        d2f = fxx + 2*fxy + fyy
-        #Достаточные условия экстремума
-        if  d2f>0 :
-          dec = [cr_1,cr_2, 'Минимум']
-        elif d2f<0 :
-          dec = [cr_1,cr_2, 'Максимум']     
-        else:
-          dec = [cr_1,cr_2, 'Стационарная точка']
-        decision.append(dec)
-    return(decision)
+  '''
+  variables: str
+    Входная строка с переменными
+  function: sympy.function
+    Функция
+  x_res: list
+    Ограничение на x
+  y_res: list
+    Ограничения на y
+  g: sympy.function
+    Функция ограничения
+
+  Result: list
+    Список координат точек
+  '''
+
+  decision = []
+  x,y=symbols(variables)
+  w = Symbol('w')
+  f = function.subs({x:x,y:y}) 
+  g = g.subs({x:x,y:y}) 
+  # Вспомогательная функция Лагранжа
+  z = f + w*g
+  # Производные 
+  fx = z.diff(x)
+  fy = z.diff(y)
+  fw = z.diff(w)
+  try:
+    sols = solve([fx,fy,fw],x,y,w)
+  except:
+    decision.append([' Функция не дифференцируема'])
+    raise SystemExit(1)
+  # Стационарная точка M(x,y) - sols
+  for i in range(len(sols)):
+    dec = []
+    cr_1 = float('{:.3f}'.format(float(sols[i][0])))
+    cr_2 = float('{:.3f}'.format(float(sols[i][1])))
+    la = float('{:.3f}'.format(float(sols[i][2])))
+    if cr_1 < x_res[0] or cr_1 > x_res[1] or cr_2 < y_res[0] or cr_2 > y_res[1]:
+      decision.append(['Не удовлетворяет ограничению'])
+    else:  
+      fxx=z.diff(x,x).subs({x:cr_1,y:cr_2,w:la})
+      fxx = float('{:.3f}'.format(float(fxx)))
+      fxy=z.diff(x,y).subs({x:cr_1,y:cr_2,w:la})
+      fxy = float('{:.3f}'.format(float(fxy)))  
+      fyy=z.diff(y,y).subs({x:cr_1,y:cr_2,w:la})
+      fyy = float('{:.3f}'.format(float(fyy)))  
+
+      d2f = fxx + 2*fxy + fyy
+      #Достаточные условия экстремума
+      if  d2f>0 :
+        dec = [cr_1,cr_2, 'Минимум']
+      elif d2f<0 :
+        dec = [cr_1,cr_2, 'Максимум']     
+      else:
+        dec = [cr_1,cr_2, 'Стационарная точка']
+      decision.append(dec)
+  return(decision)
 
 def vizualize(variables, function, x_res = [-1000,1000], y_res = [-1000,1000], g = None):
+  '''
+  variables: str
+    Входная строка с переменными
+  function: sympy.function
+    Функция
+  x_res: list
+    Ограничение на x
+  y_res: list
+    Ограничения на y
+  g: sympy.function
+    Функция ограничения
+
+  fig: graph
+    график
+  '''
    
   x,y=symbols(variables)
 
@@ -157,7 +207,21 @@ def vizualize(variables, function, x_res = [-1000,1000], y_res = [-1000,1000], g
   fig.show()
 
 def vizualize_lagrange(variables, function, x_res = [-1000,1000], y_res = [-1000,1000], g = None):
+  '''
+  variables: str
+    Входная строка с переменными
+  function: sympy.function
+    Функция
+  x_res: list
+    Ограничение на x
+  y_res: list
+    Ограничения на y
+  g: sympy.function
+    Функция ограничения
 
+  fig: graph
+    график
+  '''
 
   x,y=symbols(variables)
 
@@ -209,6 +273,11 @@ def vizualize_lagrange(variables, function, x_res = [-1000,1000], y_res = [-1000
   fig.show()
 
 def user_input():
+  '''
+  Пользовательский ввод
+  '''
+
+
   print('Введите переменные в формате:')
   print('x y')
   variables_1 = input()
