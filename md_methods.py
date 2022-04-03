@@ -22,7 +22,25 @@ from plotly.subplots import make_subplots
 def grad_with_constant(variables,function, point = [1,1], la = 0.1 ,eps=10**-5,iter = 500,flag_res = False,flag_w = False):
 
   '''
+  variables: str
+    Входная строка с переменными
+  function: sympy.function
+    Функция
+  point: list
+    Начальная точка
+  la: float
+    lambda
+  eps: float
+    Eplison
+  iter: int
+    Количество итераций
+  flag_res: boolean
+    Необходим ли вывод результатов
+  flag_w: boolnean
+    Необходима ли запись результатов
 
+  Result: list
+    Список координат точек
   '''
 
   decision = []
@@ -69,7 +87,29 @@ def grad_with_constant(variables,function, point = [1,1], la = 0.1 ,eps=10**-5,i
 def grad_with_fraction(variables,function, point = [1,1],la_0 =0.1, la = 0.1, delta = 0.1 ,eps=10**-5,iter = 500,flag_res = False,flag_w = False):
 
   '''
+  variables: str
+    Входная строка с переменными
+  function: sympy.function
+    Функция
+  point: list
+    Начальная точка
+  la_0: float
+    Начальный коэффициент
+  la: float
+    lambda
+  delta: float
+    Коэффициент дробления
+  eps: float
+    Eplison
+  iter: int
+    Количество итераций
+  flag_res: boolean
+    Необходим ли вывод результатов
+  flag_w: boolnean
+    Необходима ли запись результатов
 
+  Result: list
+    Список координат точек
   '''
 
   decision = []
@@ -254,7 +294,23 @@ def brent(function, x_res = [-1000,1000] ,eps=10**-5,iter = 500,flag_res = False
 def grad_with_optimal(variables,function, point = [1,1],eps=10**-5,iter = 500,flag_res = False,flag_w = False):
 
   '''
+  variables: str
+    Входная строка с переменными
+  function: sympy.function
+    Функция
+  point: list
+    Начальная точка
+  eps: float
+    Eplison
+  iter: int
+    Количество итераций
+  flag_res: boolean
+    Необходим ли вывод результатов
+  flag_w: boolnean
+    Необходима ли запись результатов
 
+  Result: list
+    Список координат точек
   '''
   decision = []
   counter = 0
@@ -306,15 +362,21 @@ def vizualize_constant(variables,function, point = [1,1], la = 0.1 ,eps=10**-5,i
     Входная строка с переменными
   function: sympy.function
     Функция
-  x_res: list
-    Ограничение на x
-  y_res: list
-    Ограничения на y
-  g: sympy.function
-    Функция ограничения
+  point: list
+    Начальная точка
+  la: float
+    lambda
+  eps: float
+    Eplison
+  iter: int
+    Количество итераций
+  flag_res: boolean
+    Необходим ли вывод результатов
+  flag_w: boolnean
+    Необходима ли запись результатов
 
-  fig: graph
-    график
+  Result: list
+    Список координат точек
   '''
   x,y=symbols(variables)
 
@@ -352,15 +414,25 @@ def vizualize_fraction(variables,function, point = [1,1],la_0 = 0.1, la = 0.1, d
     Входная строка с переменными
   function: sympy.function
     Функция
-  x_res: list
-    Ограничение на x
-  y_res: list
-    Ограничения на y
-  g: sympy.function
-    Функция ограничения
+  point: list
+    Начальная точка
+  la_0: float
+    Начальный коэффициент
+  la: float
+    lambda
+  delta: float
+    Коэффициент дробления
+  eps: float
+    Eplison
+  iter: int
+    Количество итераций
+  flag_res: boolean
+    Необходим ли вывод результатов
+  flag_w: boolnean
+    Необходима ли запись результатов
 
-  fig: graph
-    график
+  Result: list
+    Список координат точек
   '''
   x,y=symbols(variables)
 
@@ -392,21 +464,25 @@ def vizualize_fraction(variables,function, point = [1,1],la_0 = 0.1, la = 0.1, d
   fig.show()
 
 def vizualize_optimal(variables,function, point = [1,1],eps=10**-5,iter = 500,flag_res = False,flag_w = False):
-  
+
   '''
   variables: str
     Входная строка с переменными
   function: sympy.function
     Функция
-  x_res: list
-    Ограничение на x
-  y_res: list
-    Ограничения на y
-  g: sympy.function
-    Функция ограничения
+  point: list
+    Начальная точка
+  eps: float
+    Eplison
+  iter: int
+    Количество итераций
+  flag_res: boolean
+    Необходим ли вывод результатов
+  flag_w: boolnean
+    Необходима ли запись результатов
 
-  fig: graph
-    график
+  Result: list
+    Список координат точек
   '''
   x,y=symbols(variables)
 
